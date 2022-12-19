@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "titanium_ingot",
+  "ingredients": [
+    {
+      "item": "metallurgic_discovery:titanium_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "metallurgic_discovery:titanium_ingot"
+  }
+}
