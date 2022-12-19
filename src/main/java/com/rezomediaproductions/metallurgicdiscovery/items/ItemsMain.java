@@ -1,6 +1,6 @@
 package com.rezomediaproductions.metallurgicdiscovery.items;
 
-import com.rezomediaproductions.metallurgicdiscovery.CreativeModeTabs;
+import com.rezomediaproductions.metallurgicdiscovery.util.CreativeModeTabs;
 import com.rezomediaproductions.metallurgicdiscovery.MetallurgicDiscovery;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;

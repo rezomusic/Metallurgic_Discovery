@@ -1,6 +1,6 @@
 package com.rezomediaproductions.metallurgicdiscovery.blocks;
 
-import com.rezomediaproductions.metallurgicdiscovery.CreativeModeTabs;
+import com.rezomediaproductions.metallurgicdiscovery.util.CreativeModeTabs;
 import com.rezomediaproductions.metallurgicdiscovery.MetallurgicDiscovery;
 import com.rezomediaproductions.metallurgicdiscovery.items.ItemsMain;
 import net.minecraft.util.valueproviders.UniformInt;

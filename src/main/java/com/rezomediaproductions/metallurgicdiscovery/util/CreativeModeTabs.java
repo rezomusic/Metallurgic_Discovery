@@ -1,4 +1,4 @@
-package com.rezomediaproductions.metallurgicdiscovery;
+package com.rezomediaproductions.metallurgicdiscovery.util;
 
 import com.rezomediaproductions.metallurgicdiscovery.items.ItemsMain;
 import net.minecraft.world.item.CreativeModeTab;

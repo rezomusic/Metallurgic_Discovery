@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-
+    "metallurgic_discovery:titanium_ore",
+    "metallurgic_discovery:deepslate_titanium_ore",
+    "metallurgic_discovery:titanium_block"
   ]
 }

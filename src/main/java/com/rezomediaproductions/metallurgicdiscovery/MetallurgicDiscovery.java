@@ -5,6 +5,8 @@ import com.rezomediaproductions.metallurgicdiscovery.blocks.BlocksMain;
 import com.rezomediaproductions.metallurgicdiscovery.items.ItemsMain;
 import com.rezomediaproductions.metallurgicdiscovery.world.feature.ConfiguredFeatures;
 import com.rezomediaproductions.metallurgicdiscovery.world.feature.PlacedFeatures;
+import net.minecraft.util.datafix.fixes.RecipesFix;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
