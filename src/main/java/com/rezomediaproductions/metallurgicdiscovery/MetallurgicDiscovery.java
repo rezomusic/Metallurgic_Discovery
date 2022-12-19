@@ -3,6 +3,8 @@ package com.rezomediaproductions.metallurgicdiscovery;
 import com.mojang.logging.LogUtils;
 import com.rezomediaproductions.metallurgicdiscovery.blocks.BlocksMain;
 import com.rezomediaproductions.metallurgicdiscovery.items.ItemsMain;
+import com.rezomediaproductions.metallurgicdiscovery.world.feature.ConfiguredFeatures;
+import com.rezomediaproductions.metallurgicdiscovery.world.feature.PlacedFeatures;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -27,6 +29,10 @@ public class MetallurgicDiscovery
         ItemsMain.register(modEventBus);
 
         BlocksMain.register(modEventBus);
+
+        ConfiguredFeatures.register(modEventBus);
+
+        PlacedFeatures.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
 
