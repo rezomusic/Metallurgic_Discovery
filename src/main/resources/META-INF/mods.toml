@@ -45,9 +45,8 @@ description='''
 A complete overhaul of Minecraft’s metals. Provides more customization and more utility to tools, as well as many additional progression elements to always keep you engaged.
 Adds many ores and tool tiers across all 3 base minecraft dimensions, as well as new ways to craft and enhance tools.
 '''
-# A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
-[[dependencies.metallurgic_discovery]] #optional
-    # the modid of the dependency
+
+[[dependencies.metallurgic_discovery]]
     modId="forge" #mandatory
     # Does this dependency have to exist - if not, ordering below must be specified
     mandatory=true #mandatory
@@ -57,7 +56,7 @@ Adds many ores and tool tiers across all 3 base minecraft dimensions, as well as
     ordering="NONE"
     # Side this dependency is applied on - BOTH, CLIENT or SERVER
     side="BOTH"
-# Here's another dependency
+
 [[dependencies.metallurgic_discovery]]
     modId="minecraft"
     mandatory=true
@@ -65,3 +64,10 @@ Adds many ores and tool tiers across all 3 base minecraft dimensions, as well as
     versionRange="[1.19.2,1.20)"
     ordering="NONE"
     side="BOTH"
+
+[[dependencies.metallurgic_discovery]]
+modId="patchouli"
+mandatory=true
+versionRange="[77,)"
+ordering="NONE"
+side="BOTH"
