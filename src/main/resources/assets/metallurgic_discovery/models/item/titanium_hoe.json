@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "metallurgic_discovery:item/titanium_hoe"
+  }
+}

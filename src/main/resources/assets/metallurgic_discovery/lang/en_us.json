@@ -2,6 +2,12 @@
   "item.metallurgic_discovery.raw_titanium": "Raw Titanium",
   "item.metallurgic_discovery.titanium_ingot": "Titanium Ingot",
 
+  "item.metallurgic_discovery.titanium_sword": "Titanium Sword",
+  "item.metallurgic_discovery.titanium_pickaxe": "Titanium Pickaxe",
+  "item.metallurgic_discovery.titanium_axe": "Titanium Axe",
+  "item.metallurgic_discovery.titanium_shovel": "Titanium Shovel",
+  "item.metallurgic_discovery.titanium_hoe": "Titanium Hoe",
+
   "block.metallurgic_discovery.titanium_ore": "Titanium Ore",
   "block.metallurgic_discovery.deepslate_titanium_ore": "Deepslate Titanium Ore",
   "block.metallurgic_discovery.titanium_block": "Block of Titanium",
