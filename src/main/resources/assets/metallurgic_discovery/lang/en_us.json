@@ -11,6 +11,15 @@
   "block.metallurgic_discovery.titanium_ore": "Titanium Ore",
   "block.metallurgic_discovery.deepslate_titanium_ore": "Deepslate Titanium Ore",
   "block.metallurgic_discovery.titanium_block": "Block of Titanium",
+  "block.metallurgic_discovery.mythril_ore": "Mythril Ore",
+  "block.metallurgic_discovery.deepslate_mythril_ore": "Deepslate Mythril Ore",
+  "block.metallurgic_discovery.chromium_ore": "Chromium Ore",
+  "block.metallurgic_discovery.deepslate_chromium_ore": "Deepslate Chromium Ore",
+  "block.metallurgic_discovery.vanadium_ore": "Vanadium Ore",
+  "block.metallurgic_discovery.deepslate_vanadium_ore": "Deepslate Vanadium Ore",
+  "block.metallurgic_discovery.celestite_ore": "Celestite Ore",
+  "block.metallurgic_discovery.deepslate_celestite_ore": "Deepslate Celestite Ore",
+
 
   "itemGroup.maintab": "Metallurgic Discovery"
 }

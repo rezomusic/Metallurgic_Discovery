@@ -88,12 +88,11 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
-    maven { url 'https://maven.blamejared.com' }
+
 }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.19.2-43.2.1'
-    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:[1.19.2-77]")
 }
 
 // Example for how to get properties into the manifest for reading at runtime.
