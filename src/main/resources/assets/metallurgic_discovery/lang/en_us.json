@@ -8,6 +8,11 @@
   "item.metallurgic_discovery.titanium_shovel": "Titanium Shovel",
   "item.metallurgic_discovery.titanium_hoe": "Titanium Hoe",
 
+  "item.metallurgic_discovery.mythril_flakes": "Mythril Flakes",
+  "item.metallurgic_discovery.chromium_flakes": "Chromium Flakes",
+  "item.metallurgic_discovery.vanadium_flakes": "Vanadium Flakes",
+  "item.metallurgic_discovery.celestite_flakes": "Celestite Flakes",
+
   "block.metallurgic_discovery.titanium_ore": "Titanium Ore",
   "block.metallurgic_discovery.deepslate_titanium_ore": "Deepslate Titanium Ore",
   "block.metallurgic_discovery.titanium_block": "Block of Titanium",

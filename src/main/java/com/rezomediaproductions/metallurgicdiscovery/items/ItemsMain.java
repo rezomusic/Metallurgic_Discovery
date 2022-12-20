@@ -26,13 +26,23 @@ public class ItemsMain {
     public static final RegistryObject<Item> TITANIUM_SWORD =
             ITEMS.register("titanium_sword", () -> new SwordItem(MDToolTiers.TITANIUM_TIER, 3, 1f, new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB)));
     public static final RegistryObject<Item> TITANIUM_PICKAXE =
-            ITEMS.register("titanium_pickaxe", () -> new PickaxeItem(MDToolTiers.TITANIUM_TIER, 2, 1f, new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB)));
+            ITEMS.register("titanium_pickaxe", () -> new PickaxeItem(MDToolTiers.TITANIUM_TIER, 0, 1f, new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB)));
     public static final RegistryObject<Item> TITANIUM_AXE =
-            ITEMS.register("titanium_axe", () -> new AxeItem(MDToolTiers.TITANIUM_TIER, 3, 1f, new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB)));
+            ITEMS.register("titanium_axe", () -> new AxeItem(MDToolTiers.TITANIUM_TIER, 2, 0f, new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB)));
     public static final RegistryObject<Item> TITANIUM_SHOVEL =
-            ITEMS.register("titanium_shovel", () -> new ShovelItem(MDToolTiers.TITANIUM_TIER, 1, 1f, new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB)));
+            ITEMS.register("titanium_shovel", () -> new ShovelItem(MDToolTiers.TITANIUM_TIER, 0, 1f, new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB)));
     public static final RegistryObject<Item> TITANIUM_HOE =
-            ITEMS.register("titanium_hoe", () -> new HoeItem(MDToolTiers.TITANIUM_TIER, 1, 1f, new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB)));
+            ITEMS.register("titanium_hoe", () -> new HoeItem(MDToolTiers.TITANIUM_TIER, 0, 1f, new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB)));
+
+    // Overworld Alloy Flakes
+    public static final RegistryObject<Item> MYTHRIL_FLAKES =
+            ITEMS.register("mythril_flakes", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB)));
+    public static final RegistryObject<Item> CHROMIUM_FLAKES =
+            ITEMS.register("chromium_flakes", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB)));
+    public static final RegistryObject<Item> VANADIUM_FLAKES =
+            ITEMS.register("vanadium_flakes", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB)));
+    public static final RegistryObject<Item> CELESTITE_FLAKES =
+            ITEMS.register("celestite_flakes", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB)));
 
     public static void register(IEventBus eventBus)
     {

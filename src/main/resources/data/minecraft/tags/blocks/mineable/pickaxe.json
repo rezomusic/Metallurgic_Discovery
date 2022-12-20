@@ -3,6 +3,14 @@
   "values": [
     "metallurgic_discovery:titanium_ore",
     "metallurgic_discovery:deepslate_titanium_ore",
-    "metallurgic_discovery:titanium_block"
+    "metallurgic_discovery:titanium_block",
+    "metallurgic_discovery:mythril_ore",
+    "metallurgic_discovery:deepslate_mythril_ore",
+    "metallurgic_discovery:chromium_ore",
+    "metallurgic_discovery:deepslate_chromium_ore",
+    "metallurgic_discovery:vanadium_ore",
+    "metallurgic_discovery:deepslate_vanadium_ore",
+    "metallurgic_discovery:celestite_ore",
+    "metallurgic_discovery:deepslate_celestite_ore"
   ]
 }
