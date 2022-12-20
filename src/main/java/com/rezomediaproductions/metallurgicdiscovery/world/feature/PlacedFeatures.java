@@ -14,15 +14,32 @@ public class PlacedFeatures {
     public static final DeferredRegister<PlacedFeature> PLACED_FEATURES =
             DeferredRegister.create(Registry.PLACED_FEATURE_REGISTRY, MetallurgicDiscovery.MOD_ID);
 
-    //Titanium Ore World Placement
+    // ----- OVERWORLD ORE PLACEMENTS ----- //
+
     public static final RegistryObject<PlacedFeature> TITANIUM_ORE_PLACED = PLACED_FEATURES.register("titanium_ore_placed",
-            () -> new PlacedFeature(ConfiguredFeatures.TITANIUM_ORE.getHolder().get(),
+            () -> new PlacedFeature(ConfiguredFeatures.TITANIUM_ORE_FEATURE.getHolder().get(),
                     commonOrePlacement(9, // VeinsPerChunk
                             HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(-80), VerticalAnchor.aboveBottom(80)))));
 
+    public static final RegistryObject<PlacedFeature> MYTHRIL_ORE_PLACED = PLACED_FEATURES.register("mythril_ore_placed",
+            () -> new PlacedFeature(ConfiguredFeatures.MYTHRIL_ORE_FEATURE.getHolder().get(),
+                    commonOrePlacement(20, // VeinsPerChunk
+                            HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(-80), VerticalAnchor.aboveBottom(80)))));
 
+    public static final RegistryObject<PlacedFeature> CHROMIUM_ORE_PLACED = PLACED_FEATURES.register("chromium_ore_placed",
+            () -> new PlacedFeature(ConfiguredFeatures.CHROMIUM_ORE_FEATURE.getHolder().get(),
+                    commonOrePlacement(20, // VeinsPerChunk
+                            HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(-80), VerticalAnchor.aboveBottom(80)))));
 
+    public static final RegistryObject<PlacedFeature> VANADIUM_ORE_PLACED = PLACED_FEATURES.register("vanadium_ore_placed",
+            () -> new PlacedFeature(ConfiguredFeatures.VANADIUM_ORE_FEATURE.getHolder().get(),
+                    commonOrePlacement(20, // VeinsPerChunk
+                            HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(-80), VerticalAnchor.aboveBottom(80)))));
 
+    public static final RegistryObject<PlacedFeature> CELESTITE_ORE_PLACED = PLACED_FEATURES.register("celestite_ore_placed",
+            () -> new PlacedFeature(ConfiguredFeatures.CELESTITE_ORE_FEATURE.getHolder().get(),
+                    commonOrePlacement(20, // VeinsPerChunk
+                            HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(-80), VerticalAnchor.aboveBottom(80)))));
 
 
 
