@@ -2,9 +2,13 @@ package com.rezomediaproductions.metallurgicdiscovery;
 
 import com.mojang.logging.LogUtils;
 import com.rezomediaproductions.metallurgicdiscovery.blocks.BlocksMain;
+import com.rezomediaproductions.metallurgicdiscovery.blocks.entity.MDBlockEntities;
 import com.rezomediaproductions.metallurgicdiscovery.items.ItemsMain;
+import com.rezomediaproductions.metallurgicdiscovery.screen.BasicMetallurgyStationScreen;
+import com.rezomediaproductions.metallurgicdiscovery.screen.MDMenuTypes;
 import com.rezomediaproductions.metallurgicdiscovery.world.feature.ConfiguredFeatures;
 import com.rezomediaproductions.metallurgicdiscovery.world.feature.PlacedFeatures;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.util.datafix.fixes.RecipesFix;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
@@ -29,12 +33,13 @@ public class MetallurgicDiscovery
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         ItemsMain.register(modEventBus);
-
         BlocksMain.register(modEventBus);
 
         ConfiguredFeatures.register(modEventBus);
-
         PlacedFeatures.register(modEventBus);
+
+        MDBlockEntities.register(modEventBus);
+        MDMenuTypes.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
 
@@ -53,7 +58,7 @@ public class MetallurgicDiscovery
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event)
         {
-
+            MenuScreens.register(MDMenuTypes.BASIC_METALLURGY_STATION_MENU.get(), BasicMetallurgyStationScreen::new);
         }
     }
 }

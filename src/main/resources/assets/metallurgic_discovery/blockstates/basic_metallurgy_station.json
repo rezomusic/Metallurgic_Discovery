@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "metallurgic_discovery:block/basic_metallurgy_station",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "metallurgic_discovery:block/basic_metallurgy_station"
+    },
+    "facing=west": {
+      "model": "metallurgic_discovery:block/basic_metallurgy_station",
+      "y": 90
+    },
+    "facing=east": {
+      "model": "metallurgic_discovery:block/basic_metallurgy_station",
+      "y": 270
+    }
+  }
+}

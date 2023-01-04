@@ -11,9 +11,9 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-public class BasicAssemblyTable extends BlockEntity implements MenuProvider {
+public class BasicAssemblyTableBlockEntity extends BlockEntity implements MenuProvider {
 
-    public BasicAssemblyTable(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
+    public BasicAssemblyTableBlockEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
         super(pType, pPos, pBlockState);
     }
 

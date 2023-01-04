@@ -1,5 +1,6 @@
 package com.rezomediaproductions.metallurgicdiscovery.blocks;
 
+import com.rezomediaproductions.metallurgicdiscovery.blocks.custom.BasicMetallurgyStation;
 import com.rezomediaproductions.metallurgicdiscovery.util.CreativeModeTabs;
 import com.rezomediaproductions.metallurgicdiscovery.MetallurgicDiscovery;
 import com.rezomediaproductions.metallurgicdiscovery.items.ItemsMain;
@@ -22,7 +23,14 @@ public class BlocksMain {
     public static final DeferredRegister<Block> BLOCKS =
             DeferredRegister.create(ForgeRegistries.BLOCKS, MetallurgicDiscovery.MOD_ID);
 
-    // -----OVERWORLD ORES----- //
+    /* BLOCK ENTITIES */
+    public static final RegistryObject<Block> BASIC_METALLURGY_STATION =
+            registerBlock("basic_metallurgy_station",
+                    () -> new BasicMetallurgyStation(BlockBehaviour.Properties.of(Material.STONE).strength(5f).requiresCorrectToolForDrops().noCollission()),
+                    CreativeModeTabs.CREATIVE_MODE_TAB);
+
+
+    /* -----OVERWORLD ORES----- */
 
     // Titanium Blocks
     public static final RegistryObject<Block> TITANIUM_ORE =
