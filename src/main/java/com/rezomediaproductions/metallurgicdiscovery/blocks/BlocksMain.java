@@ -26,7 +26,7 @@ public class BlocksMain {
     /* BLOCK ENTITIES */
     public static final RegistryObject<Block> BASIC_METALLURGY_STATION =
             registerBlock("basic_metallurgy_station",
-                    () -> new BasicMetallurgyStation(BlockBehaviour.Properties.of(Material.STONE).strength(5f).requiresCorrectToolForDrops().noCollission()),
+                    () -> new BasicMetallurgyStation(BlockBehaviour.Properties.of(Material.STONE).strength(5f).requiresCorrectToolForDrops().noOcclusion()),
                     CreativeModeTabs.CREATIVE_MODE_TAB);
 
 
