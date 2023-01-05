@@ -10,7 +10,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -30,12 +29,18 @@ public class BasicMetallurgyStation extends BaseEntityBlock {
 
     public BasicMetallurgyStation(Properties pProperties) { super(pProperties); }
 
-    private static final VoxelShape SHAPE =
-            Block.box(0, 0, 0, 16, 10, 16);
-
     @Override
     public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
-        return SHAPE;
+        switch (pState.getValue(FACING)) {
+            case NORTH:
+                return Block.box(-16, 0, 0, 16, 15, 16); // Wrong
+            case SOUTH:
+                return Block.box(0, 0, 0, 32, 15, 16);
+            case WEST:
+                return Block.box(0, 0, 0, 16, 15, 32);
+            default:
+                return Block.box(0, 0, -16, 16, 15, 16); // Wrong
+        }
     }
 
     @Nullable
