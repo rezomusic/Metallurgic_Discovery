@@ -3,7 +3,6 @@ package com.rezomediaproductions.metallurgicdiscovery.screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.rezomediaproductions.metallurgicdiscovery.MetallurgicDiscovery;
-import com.rezomediaproductions.metallurgicdiscovery.blocks.entity.BasicMetallurgyStationBlockEntity;
 import com.rezomediaproductions.metallurgicdiscovery.network.MDNetworkMessages;
 import com.rezomediaproductions.metallurgicdiscovery.network.packet.ForgeButtonPacket;
 import net.minecraft.client.Minecraft;
@@ -43,8 +42,9 @@ public class BasicMetallurgyStationScreen extends AbstractContainerScreen<BasicM
 
         renderForgeButton(pPoseStack, x, y);
         renderForgeFlames(pPoseStack, x, y);
-        renderProgressArrowFirst(pPoseStack, x, y);
-        renderProgressArrowSecond(pPoseStack, x, y);
+        renderAlloyArrowProgress(pPoseStack, x, y);
+        renderMainProgressBar(pPoseStack, x, y);
+        renderFurnaceFlames(pPoseStack, x, y);
     }
 
     @Override
@@ -55,9 +55,12 @@ public class BasicMetallurgyStationScreen extends AbstractContainerScreen<BasicM
 
     @Override // Test if mouse is clicked in the forge button bounds, if clicked and button is active, start crafting
     public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
-        if (isHovering(121, 63, 25, 13, mouseX, mouseY)) {
+        // Do not send message to server unless button is active
+        if (isHovering(121, 63, 25, 13, mouseX, mouseY) && menu.hasRecipe()) {
             MDNetworkMessages.sendToServer(new ForgeButtonPacket(menu.blockEntity.getBlockPos()));
             Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0f));
+        } else if (isHovering(121, 63, 25, 13, mouseX, mouseY)) {
+            Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.CANDLE_EXTINGUISH, 1.0f));
         }
 
         return super.mouseClicked(mouseX, mouseY, mouseButton);
@@ -65,7 +68,7 @@ public class BasicMetallurgyStationScreen extends AbstractContainerScreen<BasicM
 
     // Only render button if recipe is valid
     private void renderForgeButton(PoseStack pPoseStack, int x, int y) {
-        if (menu.hasRecipe()) {
+        if (menu.hasRecipe() && !menu.isCrafting()) {
             blit(pPoseStack, x + 121, y + 63, 83, 225, 26, 13);
         }
     }
@@ -78,20 +81,29 @@ public class BasicMetallurgyStationScreen extends AbstractContainerScreen<BasicM
         }
     }
 
+    private void renderFurnaceFlames(PoseStack pPoseStack, int x, int y) {
+        if (menu.isBurning()) {
+            int ffheight = menu.getScaledFurnaceFlameHeight();
+            blit(pPoseStack, x + 15, y + 53 - ffheight, 60, 238 - ffheight, 14, ffheight );
+        }
+    }
+
     // Arrows for 4 alloy metals
-    private void renderProgressArrowFirst(PoseStack pPoseStack, int x, int y) {
+    private void renderAlloyArrowProgress(PoseStack pPoseStack, int x, int y) {
         if(menu.isCrafting()) {
-            blit(pPoseStack, x + 60, y + 26, 0, 225, menu.getScaledProgressFirstWidth(), menu.getScaledProgressFirstHeight()); // Top Left
-            blit(pPoseStack, x + 86, y + 26, 15, 225, menu.getScaledProgressFirstWidth(), menu.getScaledProgressFirstHeight()); // Top Right
-            blit(pPoseStack, x + 60, y + 75, 30, 225, menu.getScaledProgressFirstWidth(), menu.getScaledProgressFirstHeight()); // Bottom Left
-            blit(pPoseStack, x + 86, y + 75, 45, 225, menu.getScaledProgressFirstWidth(), menu.getScaledProgressFirstHeight()); // Bottom Right
+            int sW = menu.getAlloyArrowScaledProgressWidth();
+            int sH = menu.getAlloyArrowScaledProgressHeight();
+            blit(pPoseStack, x + 60, y + 26, 0, 225, sW, sH); // Top Left
+            blit(pPoseStack, x + 86, y + 26, 15, 225, sW, sH); // Top Right
+            blit(pPoseStack, x + 60, y + 75, 30, 225, sW, sH); // Bottom Left
+            blit(pPoseStack, x + 86, y + 75, 45, 225, sW, sH); // Bottom Right
         }
     }
 
     // Arrow for main output
-    private void renderProgressArrowSecond(PoseStack pPoseStack, int x, int y) {
+    private void renderMainProgressBar(PoseStack pPoseStack, int x, int y) {
         if(menu.isCrafting()) {
-            blit(pPoseStack, x + 96, y + 57, 51, 209, menu.getScaledProgressSecond(), 5);
+            blit(pPoseStack, x + 96, y + 57, 51, 209, menu.getScaledMainProgressBar(), 5);
         }
     }
 

@@ -23,7 +23,7 @@ public class BasicMetallurgyStationMenu extends AbstractContainerMenu {
     private final ContainerData data;
 
     public BasicMetallurgyStationMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
-        this(id, inv, inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(6));
+        this(id, inv, inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(7));
     }
 
     public BasicMetallurgyStationMenu(int id, Inventory inv, BlockEntity entity, ContainerData data) {
@@ -39,22 +39,22 @@ public class BasicMetallurgyStationMenu extends AbstractContainerMenu {
         this.blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
             // Top left alloy
             this.addSlot(new SlotItemHandler(handler, 0, 41, 20) {
-                public boolean mayPlace(@NotNull ItemStack pStack) { return pStack.is(ItemsMain.MYTHRIL_FLAKES.get()); }
+                public boolean mayPlace(@NotNull ItemStack pStack) { return pStack.is(ItemsMain.MYTHRIL_FLAKES.get()) && pStack.getCount() < 5; }
                 public int getMaxStackSize() {return 5;}
             });
             // Top right alloy
             this.addSlot(new SlotItemHandler(handler, 1, 103, 20) {
-                public boolean mayPlace(@NotNull ItemStack pStack) { return pStack.is(ItemsMain.CHROMIUM_FLAKES.get()); }
+                public boolean mayPlace(@NotNull ItemStack pStack) { return pStack.is(ItemsMain.CHROMIUM_FLAKES.get()) && pStack.getCount() < 5; }
                 public int getMaxStackSize() {return 5;}
             });
             // Bottom left alloy
             this.addSlot(new SlotItemHandler(handler, 2, 41, 82){
-                public boolean mayPlace(@NotNull ItemStack pStack) { return pStack.is(ItemsMain.VANADIUM_FLAKES.get()); }
+                public boolean mayPlace(@NotNull ItemStack pStack) { return pStack.is(ItemsMain.VANADIUM_FLAKES.get()) && pStack.getCount() < 5; }
                 public int getMaxStackSize() {return 5;}
             });
             // Bottom right alloy
             this.addSlot(new SlotItemHandler(handler, 3, 103, 82){
-                public boolean mayPlace(@NotNull ItemStack pStack) { return pStack.is(ItemsMain.CELESTITE_FLAKES.get()); }
+                public boolean mayPlace(@NotNull ItemStack pStack) { return pStack.is(ItemsMain.CELESTITE_FLAKES.get()) && pStack.getCount() < 5; }
                 public int getMaxStackSize() {return 5;}
             });
             // Fuel Input
@@ -72,7 +72,7 @@ public class BasicMetallurgyStationMenu extends AbstractContainerMenu {
             this.addSlot(new SlotItemHandler(handler, 7, 180, 51) {
                 public boolean mayPlace(@NotNull ItemStack pStack) { return false; }
                 public boolean mayPickup(Player playerIn) {
-                    return data.get(5) == 1;
+                    return data.get(6) == 1;
                 }});
 
         });
@@ -85,19 +85,18 @@ public class BasicMetallurgyStationMenu extends AbstractContainerMenu {
     }
 
     public boolean hasRecipe() {
-        switch (data.get(3)) {
+        switch (data.get(4)) {
             case 0 -> { return false; }
             case 1 -> { return true; }
             default -> { return false; }
         }
     }
 
-    public void setShouldCraft() {
-        blockEntity.data.set(4, 1);
-        data.set(4, 1);
+    public boolean isBurning() {
+        return data.get(2) > 0;
     }
 
-    public int getScaledProgressFirstWidth() {
+    public int getAlloyArrowScaledProgressWidth() {
         int progress = this.data.get(0);
         int maxProgress = this.data.get(1);
         int progressArrowSize = 14;
@@ -105,7 +104,7 @@ public class BasicMetallurgyStationMenu extends AbstractContainerMenu {
         return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
     }
 
-    public int getScaledProgressFirstHeight() {
+    public int getAlloyArrowScaledProgressHeight() {
         int progress = this.data.get(0);
         int maxProgress = this.data.get(1);
         int progressArrowSize = 17;
@@ -113,12 +112,20 @@ public class BasicMetallurgyStationMenu extends AbstractContainerMenu {
         return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
     }
 
-    public int getScaledProgressSecond() {
+    public int getScaledMainProgressBar() {
         int progress = this.data.get(0);
         int maxProgress = this.data.get(1);
         int progressArrowSize = 76;
 
         return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
+    }
+
+    public int getScaledFurnaceFlameHeight() {
+        int burnTime = this.data.get(2);
+        int currentFuelBurnTime = this.data.get(3);
+        int progressArrowSize = 14;
+
+        return currentFuelBurnTime != 0 && burnTime != 0 ? burnTime * progressArrowSize / currentFuelBurnTime : 0;
     }
 
     // Returns blit values for all 4 tool stats

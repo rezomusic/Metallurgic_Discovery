@@ -2,10 +2,13 @@ package com.rezomediaproductions.metallurgicdiscovery.blocks.entity;
 
 import com.rezomediaproductions.metallurgicdiscovery.recipe.BasicMetallurgyStationRecipe;
 import com.rezomediaproductions.metallurgicdiscovery.screen.BasicMetallurgyStationMenu;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
@@ -33,11 +36,13 @@ public class BasicMetallurgyStationBlockEntity extends BlockEntity implements Me
     private final ItemStackHandler itemStackHandler = new ItemStackHandler(8)
     {
         @Override
-        protected void onContentsChanged(int slot)
-        {
+        protected void onContentsChanged(int slot) {
             setChanged();
             if (itemStackHandler.getStackInSlot(7).isEmpty()) {
                 craftFinished = 0;
+            }
+            if (slot == 0 || slot == 1 || slot == 2 || slot == 3) {
+                Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.AMETHYST_BLOCK_CHIME, 1.0f));
             }
         }
     };
@@ -46,8 +51,9 @@ public class BasicMetallurgyStationBlockEntity extends BlockEntity implements Me
 
     public final ContainerData data;
     private int progress = 0; // Crafting progress
-    private int maxProgress = 400; // Completion progress
+    private int maxProgress = 500; // Completion progress
     private int burnTime = 0; // Remaining time for fuel
+    private int burnTimeForCurrentFuel = 0;
     private int shouldCraft = 0; // Forge button has been pressed (begin forging)
     private int craftFinished = 0; // Forging has finished, output item may be taken
     private int hasValidRecipe = 0; // Denotes whether forge button is able to be pressed
@@ -61,9 +67,10 @@ public class BasicMetallurgyStationBlockEntity extends BlockEntity implements Me
                     case 0 -> BasicMetallurgyStationBlockEntity.this.progress;
                     case 1 -> BasicMetallurgyStationBlockEntity.this.maxProgress;
                     case 2 -> BasicMetallurgyStationBlockEntity.this.burnTime;
-                    case 3 -> BasicMetallurgyStationBlockEntity.this.hasValidRecipe;
-                    case 4 -> BasicMetallurgyStationBlockEntity.this.shouldCraft;
-                    case 5 -> BasicMetallurgyStationBlockEntity.this.craftFinished;
+                    case 3 -> BasicMetallurgyStationBlockEntity.this.burnTimeForCurrentFuel;
+                    case 4 -> BasicMetallurgyStationBlockEntity.this.hasValidRecipe;
+                    case 5 -> BasicMetallurgyStationBlockEntity.this.shouldCraft;
+                    case 6 -> BasicMetallurgyStationBlockEntity.this.craftFinished;
 
                     default -> 0;
                 };
@@ -76,15 +83,14 @@ public class BasicMetallurgyStationBlockEntity extends BlockEntity implements Me
                     case 1 -> BasicMetallurgyStationBlockEntity.this.maxProgress = pValue;
                     case 2 -> BasicMetallurgyStationBlockEntity.this.burnTime = pValue;
                     case 3 -> BasicMetallurgyStationBlockEntity.this.hasValidRecipe = pValue;
-                    case 4 -> BasicMetallurgyStationBlockEntity.this.shouldCraft = pValue;
-                    case 5 -> BasicMetallurgyStationBlockEntity.this.craftFinished = pValue;
+                    case 4 -> BasicMetallurgyStationBlockEntity.this.burnTimeForCurrentFuel = pValue;
+                    case 5 -> BasicMetallurgyStationBlockEntity.this.shouldCraft = pValue;
+                    case 6 -> BasicMetallurgyStationBlockEntity.this.craftFinished = pValue;
                 }
             }
 
             @Override
-            public int getCount() {
-                return 6;
-            }
+            public int getCount() { return 7; }
         };
     }
 
@@ -129,6 +135,8 @@ public class BasicMetallurgyStationBlockEntity extends BlockEntity implements Me
         pTag.put("inventory", itemStackHandler.serializeNBT());
         pTag.putInt("basic_metallurgy_station.progress", this.progress);
         pTag.putInt("basic_metallurgy_station.burnTime", this.burnTime);
+        pTag.putInt("basic_metallurgy_station.currentFuelBurnTime", this.burnTimeForCurrentFuel);
+        pTag.putInt("basic_metallurgy_station.shouldCraft", this.shouldCraft);
         pTag.putInt("basic_metallurgy_station.craftFinished", this.craftFinished);
 
         super.saveAdditional(pTag);
@@ -140,6 +148,8 @@ public class BasicMetallurgyStationBlockEntity extends BlockEntity implements Me
         itemStackHandler.deserializeNBT(pTag.getCompound("inventory"));
         progress = pTag.getInt("basic_metallurgy_station.progress");
         burnTime = pTag.getInt("basic_metallurgy_station.burnTime");
+        burnTimeForCurrentFuel = pTag.getInt("basic_metallurgy_station.currentFuelBurnTime");
+        shouldCraft = pTag.getInt("basic_metallurgy_station.shouldCraft");
         craftFinished = pTag.getInt("basic_metallurgy_station.craftFinished");
     }
 
@@ -164,6 +174,17 @@ public class BasicMetallurgyStationBlockEntity extends BlockEntity implements Me
         if(level.isClientSide()) {
             return;
         }
+        /* TO DO
+        - Check for items in alloy slots
+        - Create custom tool head items to add nbt
+        - Only render alloy arrows when forging if alloy is in slot
+        - Create system for showing stat preview in GUI
+        - Fix alloy max stack bug
+        - Fix craftfinished bug
+        - Fix forge button flash on craft finish bug
+        - Make it so that only 5 total alloys can be added to the craft
+        - Craft takes longer depending on how many alloys are being used
+         */
 
         // Check for recipe
         if (hasRecipe(pEntity)) {
@@ -179,8 +200,12 @@ public class BasicMetallurgyStationBlockEntity extends BlockEntity implements Me
 
             if(!fuel.isEmpty()) {
                 fuel.shrink(1);
-                pEntity.burnTime += ForgeHooks.getBurnTime(fuel, null);
+                int selectedFuel = ForgeHooks.getBurnTime(fuel, null);
+                pEntity.burnTimeForCurrentFuel = selectedFuel;
+                pEntity.burnTime += selectedFuel ;
             }
+        } else if (pEntity.burnTime > 0) {
+            pEntity.burnTime--;
         }
 
         // Increment progress while crafting
@@ -190,6 +215,9 @@ public class BasicMetallurgyStationBlockEntity extends BlockEntity implements Me
             setChanged(level, blockPos, blockState);
 
             if(pEntity.progress >= pEntity.maxProgress) {
+                pEntity.shouldCraft = 0;
+                pEntity.resetProgress();
+                pEntity.craftFinished = 1;
                 craftItem(pEntity);
             }
         }
@@ -211,7 +239,7 @@ public class BasicMetallurgyStationBlockEntity extends BlockEntity implements Me
 
         ItemStack fuel = pEntity.itemStackHandler.getStackInSlot(4);
 
-        return recipe.isPresent() && pEntity.itemStackHandler.getStackInSlot(7).isEmpty() && !fuel.isEmpty();
+        return (recipe.isPresent()) && (pEntity.itemStackHandler.getStackInSlot(7).isEmpty()) && (!fuel.isEmpty() || pEntity.burnTime > 0);
     }
 
 
@@ -229,18 +257,10 @@ public class BasicMetallurgyStationBlockEntity extends BlockEntity implements Me
             pEntity.itemStackHandler.extractItem(6, recipe.get().getRequiredAmount(), false);
             // Will need to add nbt once custom item is created
             pEntity.itemStackHandler.setStackInSlot(7, new ItemStack(recipe.get().getResultItem().getItem()));
-
-            pEntity.shouldCraft = 0;
-            pEntity.resetProgress();
-            pEntity.craftFinished = 1;
         }
     }
 
     private void resetProgress() {
         this.progress = 0;
-    }
-
-    private static boolean canInsertItemIntoOutputSlot(SimpleContainer inventory, ItemStack itemStack) {
-        return inventory.getItem(7).isEmpty();
     }
 } 
