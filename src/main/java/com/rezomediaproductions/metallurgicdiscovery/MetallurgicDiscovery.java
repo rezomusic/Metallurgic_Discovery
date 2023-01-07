@@ -4,6 +4,8 @@ import com.mojang.logging.LogUtils;
 import com.rezomediaproductions.metallurgicdiscovery.blocks.BlocksMain;
 import com.rezomediaproductions.metallurgicdiscovery.blocks.entity.MDBlockEntities;
 import com.rezomediaproductions.metallurgicdiscovery.items.ItemsMain;
+import com.rezomediaproductions.metallurgicdiscovery.network.MDNetworkMessages;
+import com.rezomediaproductions.metallurgicdiscovery.recipe.MDRecipes;
 import com.rezomediaproductions.metallurgicdiscovery.screen.BasicMetallurgyStationScreen;
 import com.rezomediaproductions.metallurgicdiscovery.screen.MDMenuTypes;
 import com.rezomediaproductions.metallurgicdiscovery.world.feature.ConfiguredFeatures;
@@ -50,7 +52,9 @@ public class MetallurgicDiscovery
 
     private void commonSetup(final FMLCommonSetupEvent event)
     {
-
+        event.enqueueWork(() -> {
+            MDNetworkMessages.register();
+        });
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
