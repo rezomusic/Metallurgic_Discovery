@@ -41,6 +41,8 @@ public class MetallurgicDiscovery
         MDBlockEntities.register(modEventBus);
         MDMenuTypes.register(modEventBus);
 
+        MDRecipes.register(modEventBus);
+
         modEventBus.addListener(this::commonSetup);
 
         MinecraftForge.EVENT_BUS.register(this);
