@@ -38,12 +38,6 @@ public class BasicMetallurgyStationBlockEntity extends BlockEntity implements Me
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
-            if (itemStackHandler.getStackInSlot(7).isEmpty()) {
-                craftFinished = 0;
-            }
-            if (slot == 0 || slot == 1 || slot == 2 || slot == 3) {
-                Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.AMETHYST_BLOCK_CHIME, 1.0f));
-            }
         }
     };
 
@@ -180,11 +174,16 @@ public class BasicMetallurgyStationBlockEntity extends BlockEntity implements Me
         - Only render alloy arrows when forging if alloy is in slot
         - Create system for showing stat preview in GUI
         - Fix alloy max stack bug
-        - Fix craftfinished bug
         - Fix forge button flash on craft finish bug
         - Make it so that only 5 total alloys can be added to the craft
         - Craft takes longer depending on how many alloys are being used
          */
+
+        if (!pEntity.itemStackHandler.getStackInSlot(7).isEmpty()) {
+            pEntity.craftFinished = 1;
+        } else {
+            pEntity.craftFinished = 0;
+        }
 
         // Check for recipe
         if (hasRecipe(pEntity)) {
@@ -217,7 +216,6 @@ public class BasicMetallurgyStationBlockEntity extends BlockEntity implements Me
             if(pEntity.progress >= pEntity.maxProgress) {
                 pEntity.shouldCraft = 0;
                 pEntity.resetProgress();
-                pEntity.craftFinished = 1;
                 craftItem(pEntity);
             }
         }

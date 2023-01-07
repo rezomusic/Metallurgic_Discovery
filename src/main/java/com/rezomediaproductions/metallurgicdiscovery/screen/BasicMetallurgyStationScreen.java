@@ -93,10 +93,9 @@ public class BasicMetallurgyStationScreen extends AbstractContainerScreen<BasicM
         if(menu.isCrafting()) {
             int sW = menu.getAlloyArrowScaledProgressWidth();
             int sH = menu.getAlloyArrowScaledProgressHeight();
-            blit(pPoseStack, x + 60, y + 26, 0, 225, sW, sH); // Top Left
-            blit(pPoseStack, x + 86, y + 26, 15, 225, sW, sH); // Top Right
-            blit(pPoseStack, x + 60, y + 75, 30, 225, sW, sH); // Bottom Left
-            blit(pPoseStack, x + 86, y + 75, 45, 225, sW, sH); // Bottom Right
+            blit(pPoseStack, x + 60, y + 26, 0, 225, sW, sH); // Top LeftFblit(pPoseStack, x + 100 - sW, y + 26, 29 - sW, 225, sW, sH); // Top Right
+            blit(pPoseStack, x + 60, y + 92 - sH, 30, 242 - sH, sW, sH); // Bottom Left
+            blit(pPoseStack, x + 100 - sW, y + 92 - sH, 59 - sW, 242 - sH, sW, sH); // Bottom Right
         }
     }
 

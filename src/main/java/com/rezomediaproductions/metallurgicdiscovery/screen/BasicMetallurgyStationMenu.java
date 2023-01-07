@@ -39,22 +39,26 @@ public class BasicMetallurgyStationMenu extends AbstractContainerMenu {
         this.blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
             // Top left alloy
             this.addSlot(new SlotItemHandler(handler, 0, 41, 20) {
-                public boolean mayPlace(@NotNull ItemStack pStack) { return pStack.is(ItemsMain.MYTHRIL_FLAKES.get()) && pStack.getCount() < 5; }
+                public boolean mayPlace(@NotNull ItemStack pStack)
+                    { return pStack.is(ItemsMain.MYTHRIL_FLAKES.get()); }
                 public int getMaxStackSize() {return 5;}
             });
             // Top right alloy
             this.addSlot(new SlotItemHandler(handler, 1, 103, 20) {
-                public boolean mayPlace(@NotNull ItemStack pStack) { return pStack.is(ItemsMain.CHROMIUM_FLAKES.get()) && pStack.getCount() < 5; }
+                public boolean mayPlace(@NotNull ItemStack pStack)
+                    { return pStack.is(ItemsMain.CHROMIUM_FLAKES.get()); }
                 public int getMaxStackSize() {return 5;}
             });
             // Bottom left alloy
             this.addSlot(new SlotItemHandler(handler, 2, 41, 82){
-                public boolean mayPlace(@NotNull ItemStack pStack) { return pStack.is(ItemsMain.VANADIUM_FLAKES.get()) && pStack.getCount() < 5; }
+                public boolean mayPlace(@NotNull ItemStack pStack)
+                    { return pStack.is(ItemsMain.VANADIUM_FLAKES.get()); }
                 public int getMaxStackSize() {return 5;}
             });
             // Bottom right alloy
             this.addSlot(new SlotItemHandler(handler, 3, 103, 82){
-                public boolean mayPlace(@NotNull ItemStack pStack) { return pStack.is(ItemsMain.CELESTITE_FLAKES.get()) && pStack.getCount() < 5; }
+                public boolean mayPlace(@NotNull ItemStack pStack)
+                    { return pStack.is(ItemsMain.CELESTITE_FLAKES.get()); }
                 public int getMaxStackSize() {return 5;}
             });
             // Fuel Input
