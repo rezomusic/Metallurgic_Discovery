@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "metallurgic_discovery:basic_sword_stencil",
+    "metallurgic_discovery:basic_pickaxe_stencil",
+    "metallurgic_discovery:basic_axe_stencil",
+    "metallurgic_discovery:basic_shovel_stencil",
+    "metallurgic_discovery:basic_hoe_stencil"
+  ]
+}
