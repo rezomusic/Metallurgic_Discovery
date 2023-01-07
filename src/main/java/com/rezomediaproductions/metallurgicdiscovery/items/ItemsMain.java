@@ -25,49 +25,49 @@ public class ItemsMain {
 
     // Basic Stencil Items
     public static final RegistryObject<Item> BASIC_SWORD_STENCIL =
-            ITEMS.register("basic_sword_stencil", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB)));
+            ITEMS.register("basic_sword_stencil", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB).stacksTo(1)));
     public static final RegistryObject<Item> BASIC_PICKAXE_STENCIL =
-            ITEMS.register("basic_pickaxe_stencil", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB)));
+            ITEMS.register("basic_pickaxe_stencil", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB).stacksTo(1)));
     public static final RegistryObject<Item> BASIC_AXE_STENCIL =
-            ITEMS.register("basic_axe_stencil", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB)));
+            ITEMS.register("basic_axe_stencil", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB).stacksTo(1)));
     public static final RegistryObject<Item> BASIC_SHOVEL_STENCIL =
-            ITEMS.register("basic_shovel_stencil", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB)));
+            ITEMS.register("basic_shovel_stencil", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB).stacksTo(1)));
     public static final RegistryObject<Item> BASIC_HOE_STENCIL =
-            ITEMS.register("basic_hoe_stencil", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB)));
+            ITEMS.register("basic_hoe_stencil", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB).stacksTo(1)));
 
     // Overworld Tool Heads
     public static final RegistryObject<Item> IRON_SWORD_HEAD =
-            ITEMS.register("iron_sword_head", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB)));
+            ITEMS.register("iron_sword_head", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB).stacksTo(1)));
     public static final RegistryObject<Item> IRON_PICKAXE_HEAD =
-            ITEMS.register("iron_pickaxe_head", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB)));
+            ITEMS.register("iron_pickaxe_head", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB).stacksTo(1)));
     public static final RegistryObject<Item> IRON_AXE_HEAD =
-            ITEMS.register("iron_axe_head", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB)));
+            ITEMS.register("iron_axe_head", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB).stacksTo(1)));
     public static final RegistryObject<Item> IRON_SHOVEL_HEAD =
-            ITEMS.register("iron_shovel_head", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB)));
+            ITEMS.register("iron_shovel_head", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB).stacksTo(1)));
     public static final RegistryObject<Item> IRON_HOE_HEAD =
-            ITEMS.register("iron_hoe_head", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB)));
+            ITEMS.register("iron_hoe_head", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB).stacksTo(1)));
 
     public static final RegistryObject<Item> DIAMOND_SWORD_HEAD =
-            ITEMS.register("diamond_sword_head", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB)));
+            ITEMS.register("diamond_sword_head", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB).stacksTo(1)));
     public static final RegistryObject<Item> DIAMOND_PICKAXE_HEAD =
-            ITEMS.register("diamond_pickaxe_head", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB)));
+            ITEMS.register("diamond_pickaxe_head", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB).stacksTo(1)));
     public static final RegistryObject<Item> DIAMOND_AXE_HEAD =
-            ITEMS.register("diamond_axe_head", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB)));
+            ITEMS.register("diamond_axe_head", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB).stacksTo(1)));
     public static final RegistryObject<Item> DIAMOND_SHOVEL_HEAD =
-            ITEMS.register("diamond_shovel_head", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB)));
+            ITEMS.register("diamond_shovel_head", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB).stacksTo(1)));
     public static final RegistryObject<Item> DIAMOND_HOE_HEAD =
-            ITEMS.register("diamond_hoe_head", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB)));
+            ITEMS.register("diamond_hoe_head", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB).stacksTo(1)));
 
     public static final RegistryObject<Item> TITANIUM_SWORD_HEAD =
-            ITEMS.register("titanium_sword_head", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB)));
+            ITEMS.register("titanium_sword_head", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB).stacksTo(1)));
     public static final RegistryObject<Item> TITANIUM_PICKAXE_HEAD =
-            ITEMS.register("titanium_pickaxe_head", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB)));
+            ITEMS.register("titanium_pickaxe_head", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB).stacksTo(1)));
     public static final RegistryObject<Item> TITANIUM_AXE_HEAD =
-            ITEMS.register("titanium_axe_head", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB)));
+            ITEMS.register("titanium_axe_head", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB).stacksTo(1)));
     public static final RegistryObject<Item> TITANIUM_SHOVEL_HEAD =
-            ITEMS.register("titanium_shovel_head", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB)));
+            ITEMS.register("titanium_shovel_head", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB).stacksTo(1)));
     public static final RegistryObject<Item> TITANIUM_HOE_HEAD =
-            ITEMS.register("titanium_hoe_head", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB)));
+            ITEMS.register("titanium_hoe_head", () -> new Item(new Item.Properties().tab(CreativeModeTabs.CREATIVE_MODE_TAB).stacksTo(1)));
 
     // Titanium Ore Items
     public static final RegistryObject<Item> RAW_TITANIUM =
