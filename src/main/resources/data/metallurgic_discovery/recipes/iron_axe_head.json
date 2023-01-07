@@ -1,0 +1,13 @@
+{
+ "type": "metallurgic_discovery:basic_metallurgy",
+  "metalstack": {
+      "count": 3,
+      "item": "minecraft:iron_ingot"
+  },
+  "stencil": {
+      "item": "metallurgic_discovery:basic_axe_stencil"
+  },
+  "result": {
+    "item": "metallurgic_discovery:iron_axe_head"
+  }
+}

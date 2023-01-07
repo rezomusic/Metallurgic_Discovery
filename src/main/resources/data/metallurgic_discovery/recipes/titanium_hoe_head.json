@@ -1,0 +1,13 @@
+{
+ "type": "metallurgic_discovery:basic_metallurgy",
+  "metalstack": {
+      "count": 2,
+      "item": "metallurgic_discovery:titanium_ingot"
+  },
+  "stencil": {
+      "item": "metallurgic_discovery:basic_hoe_stencil"
+  },
+  "result": {
+    "item": "metallurgic_discovery:titanium_hoe_head"
+  }
+}
