@@ -2,15 +2,20 @@ package com.rezomediaproductions.metallurgicdiscovery.screen;
 
 import com.rezomediaproductions.metallurgicdiscovery.blocks.BlocksMain;
 import com.rezomediaproductions.metallurgicdiscovery.blocks.entity.BasicMetallurgyStationBlockEntity;
+import com.rezomediaproductions.metallurgicdiscovery.items.ItemsMain;
+import com.rezomediaproductions.metallurgicdiscovery.util.MDTags;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
+import org.jetbrains.annotations.NotNull;
 
 public class BasicMetallurgyStationMenu extends AbstractContainerMenu {
     public final BasicMetallurgyStationBlockEntity blockEntity;
@@ -18,12 +23,12 @@ public class BasicMetallurgyStationMenu extends AbstractContainerMenu {
     private final ContainerData data;
 
     public BasicMetallurgyStationMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
-        this(id, inv, inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
+        this(id, inv, inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(6));
     }
 
     public BasicMetallurgyStationMenu(int id, Inventory inv, BlockEntity entity, ContainerData data) {
         super(MDMenuTypes.BASIC_METALLURGY_STATION_MENU.get(), id);
-        checkContainerSize(inv, 6);
+        checkContainerSize(inv, 8);
         blockEntity = (BasicMetallurgyStationBlockEntity) entity;
         this.level = inv.player.level;
         this.data = data;
@@ -31,15 +36,45 @@ public class BasicMetallurgyStationMenu extends AbstractContainerMenu {
         addPlayerInventory(inv);
         addPlayerHotbar(inv);
 
-        // POSITIONS WILL NEED ADJUSTED
         this.blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
-            this.addSlot(new SlotItemHandler(handler, 0, 13, 14)); // Top left alloy
-            this.addSlot(new SlotItemHandler(handler, 1, 70, 14)); // Top right alloy
-            this.addSlot(new SlotItemHandler(handler, 2, 13, 61)); // Bottom left alloy
-            this.addSlot(new SlotItemHandler(handler, 3, 70, 61)); // Bottom right alloy
-            this.addSlot(new SlotItemHandler(handler, 4, 41, 38)); // Center input for metals
-            this.addSlot(new SlotItemHandler(handler, 5, 121, 38)); // Output for tool heads
-            // Will need slot for fuel in the future
+            // Top left alloy
+            this.addSlot(new SlotItemHandler(handler, 0, 41, 20) {
+                public boolean mayPlace(@NotNull ItemStack pStack) { return pStack.is(ItemsMain.MYTHRIL_FLAKES.get()); }
+                public int getMaxStackSize() {return 5;}
+            });
+            // Top right alloy
+            this.addSlot(new SlotItemHandler(handler, 1, 103, 20) {
+                public boolean mayPlace(@NotNull ItemStack pStack) { return pStack.is(ItemsMain.CHROMIUM_FLAKES.get()); }
+                public int getMaxStackSize() {return 5;}
+            });
+            // Bottom left alloy
+            this.addSlot(new SlotItemHandler(handler, 2, 41, 82){
+                public boolean mayPlace(@NotNull ItemStack pStack) { return pStack.is(ItemsMain.VANADIUM_FLAKES.get()); }
+                public int getMaxStackSize() {return 5;}
+            });
+            // Bottom right alloy
+            this.addSlot(new SlotItemHandler(handler, 3, 103, 82){
+                public boolean mayPlace(@NotNull ItemStack pStack) { return pStack.is(ItemsMain.CELESTITE_FLAKES.get()); }
+                public int getMaxStackSize() {return 5;}
+            });
+            // Fuel Input
+            this.addSlot(new SlotItemHandler(handler, 4, 14, 56){
+                public boolean mayPlace(@NotNull ItemStack pStack) { return ForgeHooks.getBurnTime(pStack, null) > 0; }
+            });
+            // Stencil Slot
+            this.addSlot(new SlotItemHandler(handler, 5, 207, 52){
+                public boolean mayPlace(@NotNull ItemStack pStack) { return pStack.is(MDTags.Items.IS_TOOL_STENCIL); }
+                public int getMaxStackSize() { return 1; }
+            });
+            // Center input for metals
+            this.addSlot(new SlotItemHandler(handler, 6, 72, 51));
+            // Output crafted tool heads
+            this.addSlot(new SlotItemHandler(handler, 7, 180, 51) {
+                public boolean mayPlace(@NotNull ItemStack pStack) { return false; }
+                public boolean mayPickup(Player playerIn) {
+                    return data.get(5) == 1;
+                }});
+
         });
 
         addDataSlots(data);
@@ -49,12 +84,52 @@ public class BasicMetallurgyStationMenu extends AbstractContainerMenu {
         return data.get(0) > 0;
     }
 
-    public int getScaledProgress() {
+    public boolean hasRecipe() {
+        switch (data.get(3)) {
+            case 0 -> { return false; }
+            case 1 -> { return true; }
+            default -> { return false; }
+        }
+    }
+
+    public void setShouldCraft() {
+        blockEntity.data.set(4, 1);
+        data.set(4, 1);
+    }
+
+    public int getScaledProgressFirstWidth() {
         int progress = this.data.get(0);
-        int maxProgress = this.data.get(1);  // Max Progress
-        int progressArrowSize = 53; // This is the height in pixels of your arrow
+        int maxProgress = this.data.get(1);
+        int progressArrowSize = 14;
 
         return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
+    }
+
+    public int getScaledProgressFirstHeight() {
+        int progress = this.data.get(0);
+        int maxProgress = this.data.get(1);
+        int progressArrowSize = 17;
+
+        return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
+    }
+
+    public int getScaledProgressSecond() {
+        int progress = this.data.get(0);
+        int maxProgress = this.data.get(1);
+        int progressArrowSize = 76;
+
+        return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
+    }
+
+    // Returns blit values for all 4 tool stats
+    public int getScaledStatsBars() {
+        Item currentMetal = slots.get(7).getItem().getItem();
+
+        int progress = this.data.get(0);
+        int maxProgress = this.data.get(1);  // Max Progress
+        int statBarSize = 53; // This is the height in pixels of your arrow
+
+        return maxProgress != 0 && progress != 0 ? progress * statBarSize / maxProgress : 0;
     }
 
 
@@ -74,10 +149,10 @@ public class BasicMetallurgyStationMenu extends AbstractContainerMenu {
     private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
 
     // THIS YOU HAVE TO DEFINE!
-    private static final int TE_INVENTORY_SLOT_COUNT = 6;  // must be the number of slots you have!
+    private static final int TE_INVENTORY_SLOT_COUNT = 8;  // must be the number of slots you have!
 
     @Override
-    public ItemStack quickMoveStack(Player playerIn, int index) {
+    public ItemStack quickMoveStack(@NotNull Player playerIn, int index) {
         Slot sourceSlot = slots.get(index);
         if (sourceSlot == null || !sourceSlot.hasItem()) return ItemStack.EMPTY;  //EMPTY_ITEM
         ItemStack sourceStack = sourceSlot.getItem();
@@ -120,14 +195,14 @@ public class BasicMetallurgyStationMenu extends AbstractContainerMenu {
     private void addPlayerInventory(Inventory playerInventory) {
         for (int i = 0; i < 3; i++) {
             for (int n = 0; n < 9; n++) {
-                this.addSlot(new Slot(playerInventory, n + i * 9 + 9, 8 + n * 18, 86 + i * 18));
+                this.addSlot(new Slot(playerInventory, n + i * 9 + 9, 39 + n * 18, 127 + i * 18));
             }
         }
     }
 
     private void addPlayerHotbar(Inventory playerInventory) {
         for (int i = 0; i < 9; i++) {
-            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 144));
+            this.addSlot(new Slot(playerInventory, i, 39 + i * 18, 185));
         }
     }
 }
