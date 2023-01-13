@@ -17,6 +17,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -51,6 +52,10 @@ public class BasicMetallurgyStationBlockEntity extends BlockEntity implements Me
     private int shouldCraft = 0; // Forge button has been pressed (begin forging)
     private int craftFinished = 0; // Forging has finished, output item may be taken
     private int hasValidRecipe = 0; // Denotes whether forge button is able to be pressed
+    private int numSpeedAlloy = 0;
+    private int numToughnessAlloy = 0;
+    private int numSharpnessAlloy = 0;
+    private int numEnchantAlloy = 0;
 
     public BasicMetallurgyStationBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(MDBlockEntities.BASIC_METALLURGY_STATION.get(), pPos, pBlockState);
@@ -65,6 +70,10 @@ public class BasicMetallurgyStationBlockEntity extends BlockEntity implements Me
                     case 4 -> BasicMetallurgyStationBlockEntity.this.hasValidRecipe;
                     case 5 -> BasicMetallurgyStationBlockEntity.this.shouldCraft;
                     case 6 -> BasicMetallurgyStationBlockEntity.this.craftFinished;
+                    case 7 -> BasicMetallurgyStationBlockEntity.this.numSpeedAlloy;
+                    case 8 -> BasicMetallurgyStationBlockEntity.this.numToughnessAlloy;
+                    case 9 -> BasicMetallurgyStationBlockEntity.this.numSharpnessAlloy;
+                    case 10 -> BasicMetallurgyStationBlockEntity.this.numEnchantAlloy;
 
                     default -> 0;
                 };
@@ -80,11 +89,15 @@ public class BasicMetallurgyStationBlockEntity extends BlockEntity implements Me
                     case 4 -> BasicMetallurgyStationBlockEntity.this.burnTimeForCurrentFuel = pValue;
                     case 5 -> BasicMetallurgyStationBlockEntity.this.shouldCraft = pValue;
                     case 6 -> BasicMetallurgyStationBlockEntity.this.craftFinished = pValue;
+                    case 7 -> BasicMetallurgyStationBlockEntity.this.numSpeedAlloy = pValue;
+                    case 8 -> BasicMetallurgyStationBlockEntity.this.numToughnessAlloy = pValue;
+                    case 9 -> BasicMetallurgyStationBlockEntity.this.numSharpnessAlloy = pValue;
+                    case 10 -> BasicMetallurgyStationBlockEntity.this.numEnchantAlloy = pValue;
                 }
             }
 
             @Override
-            public int getCount() { return 7; }
+            public int getCount() { return 11; }
         };
     }
 
@@ -169,8 +182,6 @@ public class BasicMetallurgyStationBlockEntity extends BlockEntity implements Me
             return;
         }
         /* TO DO
-        - Check for items in alloy slots
-        - Create custom tool head items to add nbt
         - Only render alloy arrows when forging if alloy is in slot
         - Create system for showing stat preview in GUI
         - Fix alloy max stack bug
@@ -178,6 +189,10 @@ public class BasicMetallurgyStationBlockEntity extends BlockEntity implements Me
         - Make it so that only 5 total alloys can be added to the craft
         - Craft takes longer depending on how many alloys are being used
          */
+        pEntity.numSpeedAlloy = pEntity.itemStackHandler.getStackInSlot(0).getCount();
+        pEntity.numToughnessAlloy = pEntity.itemStackHandler.getStackInSlot(1).getCount();
+        pEntity.numSharpnessAlloy = pEntity.itemStackHandler.getStackInSlot(2).getCount();
+        pEntity.numEnchantAlloy = pEntity.itemStackHandler.getStackInSlot(3).getCount();
 
         if (!pEntity.itemStackHandler.getStackInSlot(7).isEmpty()) {
             pEntity.craftFinished = 1;
@@ -188,6 +203,7 @@ public class BasicMetallurgyStationBlockEntity extends BlockEntity implements Me
         // Check for recipe
         if (hasRecipe(pEntity)) {
             pEntity.hasValidRecipe = 1;
+
         } else {
             pEntity.hasValidRecipe = 0;
             pEntity.shouldCraft = 0;
@@ -252,9 +268,24 @@ public class BasicMetallurgyStationBlockEntity extends BlockEntity implements Me
             Optional<BasicMetallurgyStationRecipe> recipe = level.getRecipeManager()
                     .getRecipeFor(BasicMetallurgyStationRecipe.Type.INSTANCE, inventory, level);
 
+            pEntity.itemStackHandler.setStackInSlot(0, new ItemStack(Items.AIR));
+            pEntity.itemStackHandler.setStackInSlot(1, new ItemStack(Items.AIR));
+            pEntity.itemStackHandler.setStackInSlot(2, new ItemStack(Items.AIR));
+            pEntity.itemStackHandler.setStackInSlot(3, new ItemStack(Items.AIR));
             pEntity.itemStackHandler.extractItem(6, recipe.get().getRequiredAmount(), false);
-            // Will need to add nbt once custom item is created
-            pEntity.itemStackHandler.setStackInSlot(7, new ItemStack(recipe.get().getResultItem().getItem()));
+
+            ItemStack crafted = new ItemStack(recipe.get().getResultItem().getItem());
+
+            if (pEntity.numSpeedAlloy > 0 || pEntity.numToughnessAlloy > 0 || pEntity.numSharpnessAlloy > 0 || pEntity.numEnchantAlloy > 0 ) {
+                CompoundTag alloys = new CompoundTag();
+                alloys.putInt("metallurgic_discovery.speedAlloys", pEntity.numSpeedAlloy);
+                alloys.putInt("metallurgic_discovery.toughnessAlloys", pEntity.numToughnessAlloy);
+                alloys.putInt("metallurgic_discovery.sharpnessAlloys", pEntity.numSharpnessAlloy);
+                alloys.putInt("metallurgic_discovery.enchantAlloys", pEntity.numEnchantAlloy);
+                crafted.setTag(alloys);
+            }
+
+            pEntity.itemStackHandler.setStackInSlot(7, crafted);
         }
     }
 
