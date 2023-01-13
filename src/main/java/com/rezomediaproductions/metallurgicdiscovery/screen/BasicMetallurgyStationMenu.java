@@ -23,7 +23,7 @@ public class BasicMetallurgyStationMenu extends AbstractContainerMenu {
     private final ContainerData data;
 
     public BasicMetallurgyStationMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
-        this(id, inv, inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(7));
+        this(id, inv, inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(11));
     }
 
     public BasicMetallurgyStationMenu(int id, Inventory inv, BlockEntity entity, ContainerData data) {
